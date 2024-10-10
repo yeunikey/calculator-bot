@@ -4,16 +4,20 @@ import Conversation from "../entities/conversation";
 class StartConversation extends Conversation {
 
     async onStart(ctx: Context): Promise<void> {
-        await ctx.reply([
-            "Список текущих команд:",
-            "",
-            " \`/start\` \\- список команд",
-            " \`/calculate\` \\- считать степуху",
-            "",
-            "powered by @yeunikey"
-        ].join("\n"), {
-            parse_mode: "MarkdownV2"
-        });
+        try {
+            await ctx.reply([
+                "Список текущих команд:",
+                "",
+                " \`/start\` \\- список команд",
+                " \`/calculate\` \\- считать степуху",
+                "",
+                "powered by @yeunikey"
+            ].join("\n"), {
+                parse_mode: "MarkdownV2"
+            });
+        } catch (err) {
+            return;
+        }
     }
 
 }

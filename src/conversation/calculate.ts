@@ -11,7 +11,11 @@ class CalculateConversation extends Conversation {
     private status: Status = Status.MIDTERM;
 
     async onStart(ctx: Context): Promise<void> {
-        await ctx.reply("Напишите в чат ваш Register-Midterm")
+        try {
+            await ctx.reply("Напишите в чат ваш Register-Midterm")
+        } catch (err) {
+            return;
+        }
     }
 
     async onMessage(ctx: Context): Promise<void> {
