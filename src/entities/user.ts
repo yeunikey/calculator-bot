@@ -15,6 +15,10 @@ class User {
         await this.conversation.onStart(ctx);
     }
 
+    async leaveConversation() {
+        this.conversation = undefined;
+    }
+
 }
 
 export default User;

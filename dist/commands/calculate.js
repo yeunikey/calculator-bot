@@ -26,7 +26,11 @@ function calculateCommand(instance) {
                 user = new user_1.default(ctx.chatId);
                 instance.getUserManager().addUser(user);
             }
-            yield user.changeConversation(new calculate_1.default(user), ctx);
+            try {
+                yield user.changeConversation(new calculate_1.default(user), ctx);
+            }
+            catch (err) {
+            }
         }));
     }
     catch (err) {

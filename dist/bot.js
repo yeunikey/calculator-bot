@@ -6,6 +6,7 @@ const calculate_1 = require("./commands/calculate");
 const user_1 = require("./managers/user");
 const callback_1 = require("./listeners/callback");
 const message_1 = require("./listeners/message");
+const start_1 = require("./commands/start");
 class MyBot {
     constructor(apiKey) {
         this.userManager = new user_1.UserManager(this);
@@ -24,6 +25,7 @@ class MyBot {
     }
     commands() {
         (0, calculate_1.calculateCommand)(this);
+        (0, start_1.startCommand)(this);
     }
     listeners() {
         (0, callback_1.registerCallback)(this);

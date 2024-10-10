@@ -1,12 +1,13 @@
 import { MyBot } from '../bot';
 import CalculateConversation from '../conversation/calculate';
+import StartConversation from '../conversation/start';
 import User from '../entities/user';
 import Logger from '../utils/logger';
 
-export function calculateCommand(instance: MyBot) {
+export function startCommand(instance: MyBot) {
     
     try {
-        instance.getBot().command("calculate", async (ctx) => {
+        instance.getBot().command("start", async (ctx) => {
     
             if (ctx.chatId == undefined || ctx.chatId < 0)
                 return;
@@ -20,7 +21,7 @@ export function calculateCommand(instance: MyBot) {
             }
             
             try {
-                await user.changeConversation(new CalculateConversation(user), ctx);
+                await user.changeConversation(new StartConversation(user), ctx);
             } catch (err) {
             }
         })

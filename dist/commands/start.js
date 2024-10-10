@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.startCommand = startCommand;
-const TestConversation_1 = __importDefault(require("../conversation/TestConversation"));
+const start_1 = __importDefault(require("../conversation/start"));
 const user_1 = __importDefault(require("../entities/user"));
 const logger_1 = __importDefault(require("../utils/logger"));
 function startCommand(instance) {
@@ -26,10 +26,14 @@ function startCommand(instance) {
                 user = new user_1.default(ctx.chatId);
                 instance.getUserManager().addUser(user);
             }
-            yield user.changeConversation(new TestConversation_1.default(user), ctx);
+            try {
+                yield user.changeConversation(new start_1.default(user), ctx);
+            }
+            catch (err) {
+            }
         }));
     }
     catch (err) {
-        logger_1.default.log("Не удалось подключиться к LanguageConversation, " + err);
+        logger_1.default.log("Не удалось подключиться к CalculateConversation, " + err);
     }
 }

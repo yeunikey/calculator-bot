@@ -41,7 +41,11 @@ class CalculateConversation extends conversation_1.default {
                 return;
             }
             if (this.isNumber(text)) {
-                yield ctx.reply("Напишите цифру. Например, 52.5");
+                yield ctx.reply("Неверный формат. Например, 52.5");
+                return;
+            }
+            if (Number(text) > 100 || Number(text) < 0) {
+                yield ctx.reply("Неверный формат. Оно не может быть больше 100 или меньше 0");
                 return;
             }
             if (this.status == Status.MIDTERM) {
@@ -97,6 +101,7 @@ class CalculateConversation extends conversation_1.default {
                 ];
                 yield ctx.reply(message.join("\n"));
             }
+            this.user.leaveConversation();
         });
     }
     calculateTotal() {

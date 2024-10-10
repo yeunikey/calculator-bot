@@ -31,7 +31,12 @@ class CalculateConversation extends Conversation {
         }
 
         if (this.isNumber(text)) {
-            await ctx.reply("Напишите цифру. Например, 52.5");
+            await ctx.reply("Неверный формат. Например, 52.5");
+            return;
+        }
+
+        if (Number(text) > 100 || Number(text) < 0) {
+            await ctx.reply("Неверный формат. Оно не может быть больше 100 или меньше 0")
             return;
         }
 
@@ -89,6 +94,8 @@ class CalculateConversation extends Conversation {
             ]
             await ctx.reply(message.join("\n"));
         }
+
+        this.user.leaveConversation();
 
     }
 

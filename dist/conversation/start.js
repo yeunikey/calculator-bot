@@ -8,21 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-class User {
-    constructor(id) {
-        this.id = id;
-    }
-    changeConversation(conversation, ctx) {
+const conversation_1 = __importDefault(require("../entities/conversation"));
+class StartConversation extends conversation_1.default {
+    onStart(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.conversation = conversation;
-            yield this.conversation.onStart(ctx);
-        });
-    }
-    leaveConversation() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.conversation = undefined;
+            yield ctx.reply([
+                "Список текущих команд:",
+                "",
+                " \`/start\` \\- список команд",
+                " \`/calculate\` \\- считать степуху",
+                "",
+                "powered by @yeunikey"
+            ].join("\n"), {
+                parse_mode: "MarkdownV2"
+            });
         });
     }
 }
-exports.default = User;
+exports.default = StartConversation;

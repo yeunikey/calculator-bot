@@ -3,6 +3,7 @@ import { calculateCommand } from './commands/calculate';
 import { UserManager } from './managers/user';
 import { registerCallback } from './listeners/callback';
 import { registerMessage } from './listeners/message';
+import { startCommand } from './commands/start';
 
 export class MyBot {
 
@@ -32,6 +33,7 @@ export class MyBot {
 
     private commands() {
         calculateCommand(this);
+        startCommand(this)
     }
 
     private listeners() {
