@@ -15,10 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.calculateCommand = calculateCommand;
 const calculate_1 = __importDefault(require("../conversation/calculate"));
 const user_1 = __importDefault(require("../entities/user"));
-const logger_1 = __importDefault(require("../utils/logger"));
 function calculateCommand(instance) {
-    try {
-        instance.getBot().command("calculate", (ctx) => __awaiter(this, void 0, void 0, function* () {
+    instance.getBot().command("calculate", (ctx) => __awaiter(this, void 0, void 0, function* () {
+        try {
             if (ctx.chatId == undefined || ctx.chatId < 0)
                 return;
             let user = instance.getUserManager().getUser(ctx.chatId);
@@ -26,14 +25,8 @@ function calculateCommand(instance) {
                 user = new user_1.default(ctx.chatId);
                 instance.getUserManager().addUser(user);
             }
-            try {
-                yield user.changeConversation(new calculate_1.default(user), ctx);
-            }
-            catch (err) {
-            }
-        }));
-    }
-    catch (err) {
-        logger_1.default.log("Не удалось подключиться к CalculateConversation, " + err);
-    }
+            yield user.changeConversation(new calculate_1.default(user), ctx);
+        }
+        catch (err) { }
+    }));
 }

@@ -5,9 +5,9 @@ import Logger from '../utils/logger';
 
 export function calculateCommand(instance: MyBot) {
     
-    try {
-        instance.getBot().command("calculate", async (ctx) => {
-    
+    instance.getBot().command("calculate", async (ctx) => {
+
+        try {
             if (ctx.chatId == undefined || ctx.chatId < 0)
                 return;
 
@@ -19,13 +19,10 @@ export function calculateCommand(instance: MyBot) {
                 instance.getUserManager().addUser(user);
             }
             
-            try {
-                await user.changeConversation(new CalculateConversation(user), ctx);
-            } catch (err) {
-            }
-        })
-    } catch (err) {
-        Logger.log("Не удалось подключиться к CalculateConversation, " + err)
-    }
+            
+            await user.changeConversation(new CalculateConversation(user), ctx);
+            
+        } catch (err) {}
+    })
 
 }

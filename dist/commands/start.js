@@ -15,10 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.startCommand = startCommand;
 const start_1 = __importDefault(require("../conversation/start"));
 const user_1 = __importDefault(require("../entities/user"));
-const logger_1 = __importDefault(require("../utils/logger"));
 function startCommand(instance) {
-    try {
-        instance.getBot().command("start", (ctx) => __awaiter(this, void 0, void 0, function* () {
+    instance.getBot().command("start", (ctx) => __awaiter(this, void 0, void 0, function* () {
+        try {
             if (ctx.chatId == undefined || ctx.chatId < 0)
                 return;
             let user = instance.getUserManager().getUser(ctx.chatId);
@@ -26,14 +25,8 @@ function startCommand(instance) {
                 user = new user_1.default(ctx.chatId);
                 instance.getUserManager().addUser(user);
             }
-            try {
-                yield user.changeConversation(new start_1.default(user), ctx);
-            }
-            catch (err) {
-            }
-        }));
-    }
-    catch (err) {
-        logger_1.default.log("Не удалось подключиться к CalculateConversation, " + err);
-    }
+            yield user.changeConversation(new start_1.default(user), ctx);
+        }
+        catch (err) { }
+    }));
 }

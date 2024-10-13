@@ -24,7 +24,12 @@ class CalculateConversation extends conversation_1.default {
     ;
     onStart(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield ctx.reply("Напишите в чат ваш Register-Midterm");
+            try {
+                yield ctx.reply("Напишите в чат ваш Register-Midterm");
+            }
+            catch (err) {
+                return;
+            }
         });
     }
     onMessage(ctx) {
@@ -76,18 +81,53 @@ class CalculateConversation extends conversation_1.default {
             }
         });
     }
+    round(num) {
+        return Math.round(num * 100) / 100;
+    }
     showResult(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.final == undefined) {
-                this.final = (70 - ((this.midterm * 0.3) + (this.endterm * 0.3))) / 0.4;
+                this.final = this.round((70 - ((this.midterm * 0.3) + (this.endterm * 0.3))) / 0.4);
                 this.calculateTotal();
                 let message = [
                     `Register-Midterm: ${this.midterm}`,
                     `Register-Endterm: ${this.endterm}`,
                     ``,
-                    `Ты должен набрать final больше ${this.final}`,
+                    `Ты должен набрать final = ${this.final}`,
                     `чтобы остаться на стипендии (total = 70)`
                 ];
+                if (this.midterm < 25 || this.endterm < 25) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if ((this.midterm + this.endterm) / 2 < 50) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if (this.final < 25) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if (this.final < 50) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        ``,
+                        `У тебя FX (пересдача)`
+                    ];
+                }
                 yield ctx.reply(message.join("\n"));
             }
             else {
@@ -99,6 +139,71 @@ class CalculateConversation extends conversation_1.default {
                     ``,
                     `Total: ${this.total}`
                 ];
+                if (this.midterm < 25 || this.endterm < 25) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if ((this.midterm + this.endterm) / 2 < 50) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if (this.final < 25) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if (this.final < 50) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя FX (пересдача)`
+                    ];
+                }
+                else if (this.total != undefined && this.total < 50) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя летка брадок`
+                    ];
+                }
+                else if (this.total != undefined && this.total < 70) {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `У тебя нет степухи`,
+                        `Total = ${this.total}`
+                    ];
+                }
+                else {
+                    message = [
+                        `Register-Midterm: ${this.midterm}`,
+                        `Register-Endterm: ${this.endterm}`,
+                        `Final: ${this.final}`,
+                        ``,
+                        `Ураа, у тебя есть степа!`,
+                        `Total = ${this.total}`
+                    ];
+                }
                 yield ctx.reply(message.join("\n"));
             }
             this.user.leaveConversation();
@@ -107,7 +212,7 @@ class CalculateConversation extends conversation_1.default {
     calculateTotal() {
         if (this.final == undefined)
             return;
-        this.total = (this.midterm * 0.3) + (this.endterm * 0.3) + (this.final * 0.4);
+        this.total = this.round((this.midterm * 0.3) + (this.endterm * 0.3) + (this.final * 0.4));
     }
     isNumber(value) {
         return isNaN(Number(value));

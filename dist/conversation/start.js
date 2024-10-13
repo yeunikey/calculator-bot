@@ -16,16 +16,21 @@ const conversation_1 = __importDefault(require("../entities/conversation"));
 class StartConversation extends conversation_1.default {
     onStart(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield ctx.reply([
-                "Список текущих команд:",
-                "",
-                " \`/start\` \\- список команд",
-                " \`/calculate\` \\- считать степуху",
-                "",
-                "powered by @yeunikey"
-            ].join("\n"), {
-                parse_mode: "MarkdownV2"
-            });
+            try {
+                yield ctx.reply([
+                    "Список текущих команд:",
+                    "",
+                    " \`/start\` \\- список команд",
+                    " \`/calculate\` \\- считать степуху",
+                    "",
+                    "powered by @yeunikey"
+                ].join("\n"), {
+                    parse_mode: "MarkdownV2"
+                });
+            }
+            catch (err) {
+                return;
+            }
         });
     }
 }
