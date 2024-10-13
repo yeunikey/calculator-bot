@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Бот для калькулятора аиту",
   "scripts": {
-    "start": "npx tsc && node ./dist/runner.js"
+    "start": "node ./dist/runner.js",
+    "dev": "npx tsc && node ./dist/runner.js"
   },
   "author": "yeunikey",
   "license": "ISC",
